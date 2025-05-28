@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Expense Splitter</h1>
+
+    <h2>User 1</h2>
+    <div>
+        <label for="user1_alquiler">Alquiler:</label>
+        <input type="number" id="user1_alquiler" name="user1_alquiler">
+    </div>
+    <div>
+        <label for="user1_coche">Coche:</label>
+        <input type="number" id="user1_coche" name="user1_coche">
+    </div>
+    <div>
+        <label for="user1_compra">Compra:</label>
+        <input type="number" id="user1_compra" name="user1_compra">
+    </div>
+    <div>
+        <label for="user1_mascota">Mascota:</label>
+        <input type="number" id="user1_mascota" name="user1_mascota">
+    </div>
+
+    <h2>User 2</h2>
+    <div>
+        <label for="user2_alquiler">Alquiler:</label>
+        <input type="number" id="user2_alquiler" name="user2_alquiler">
+    </div>
+    <div>
+        <label for="user2_coche">Coche:</label>
+        <input type="number" id="user2_coche" name="user2_coche">
+    </div>
+    <div>
+        <label for="user2_compra">Compra:</label>
+        <input type="number" id="user2_compra" name="user2_compra">
+    </div>
+    <div>
+        <label for="user2_mascota">Mascota:</label>
+        <input type="number" id="user2_mascota" name="user2_mascota">
+    </div>
+
+    <h2>Totals</h2>
+    <div>
+        <p>Total Alquiler: <span id="total_alquiler">0</span></p>
+        <p>Total Coche: <span id="total_coche">0</span></p>
+        <p>Total Compra: <span id="total_compra">0</span></p>
+        <p>Total Mascota: <span id="total_mascota">0</span></p>
+    </div>
+    <div>
+        <p>Total User 1: <span id="total_user1">0</span></p>
+        <p>Total User 2: <span id="total_user2">0</span></p>
+    </div>
+    <div>
+        <p>Average Expense: <span id="average_expense">0</span></p>
+    </div>
+    <div>
+        <p>Debt Information: <span id="debt_info"></span></p>
+    </div>
+
+    <button id="calculate_button">Calculate Expenses</button>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

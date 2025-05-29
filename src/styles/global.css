@@ -26,7 +26,8 @@ div {
 
 label {
     display: inline-block;
-    width: 100px; /* Adjust as needed */
+    width: 100px;
+    /* Adjust as needed */
     margin-right: 10px;
 }
 
@@ -34,26 +35,32 @@ input[type="number"] {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 150px; /* Adjust as needed */
+    width: 150px;
+    /* Adjust as needed */
 }
 
 /* Grouping user inputs visually */
-h2 + div, h2 + div + div, h2 + div + div + div, h2 + div + div + div + div {
+h2+div,
+h2+div+div,
+h2+div+div+div,
+h2+div+div+div+div {
     background-color: #fff;
     padding: 15px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Totals and Results Section */
-h2 ~ div p { /* Targets p tags within divs that are siblings of h2 (for totals section) */
+h2~div p {
+    /* Targets p tags within divs that are siblings of h2 (for totals section) */
     margin: 8px 0;
     font-size: 1.1em;
 }
 
-h2 ~ div p span {
+h2~div p span {
     font-weight: bold;
-    color: #0056b3; /* A slightly different color for values */
+    color: #0056b3;
+    /* A slightly different color for values */
 }
 
 /* Button Styling */
@@ -75,17 +82,23 @@ button#calculate_button:hover {
 }
 
 /* Specific styling for the main sections to group them */
-body > h2 { /* Direct children h2 of body */
+body>h2 {
+    /* Direct children h2 of body */
     margin-top: 40px;
 }
 
 /* Styling for the container of totals */
-h2:nth-of-type(3) + div, /* Total Alquiler, Coche etc. */
-h2:nth-of-type(3) + div + div, /* Total User 1, User 2 */
-h2:nth-of-type(3) + div + div + div, /* Average Expense */
-h2:nth-of-type(3) + div + div + div + div { /* Debt Info */
-    background-color: #e9f5ff; /* A light blue background */
+h2:nth-of-type(3)+div,
+/* Total Alquiler, Coche etc. */
+h2:nth-of-type(3)+div+div,
+/* Total User 1, User 2 */
+h2:nth-of-type(3)+div+div+div,
+/* Average Expense */
+h2:nth-of-type(3)+div+div+div+div {
+    /* Debt Info */
+    background-color: #e9f5ff;
+    /* A light blue background */
     padding: 15px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }

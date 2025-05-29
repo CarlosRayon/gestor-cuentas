@@ -139,6 +139,7 @@ const initialExpenseValues = {
   <div class="summary-section" id="summary_section">
     <h2>Resumen General</h2>
     <p><strong>Total General de Gastos:</strong> <span id="total_general_expenses">0.00</span>€</p>
+    <p><strong>Gasto Medio por Usuario:</strong> <span id="average_expense_per_user">0.00</span>€</p>
     <p><strong>Cantidad a Pagar/Recibir:</strong> <span id="payment_summary">Calculando...</span></p>
   </div>
 </div>
@@ -182,6 +183,7 @@ const initialExpenseValues = {
     document.getElementById('total_general_expenses').textContent = total_general_expenses.toFixed(2);
 
     const half_total = total_general_expenses / 2;
+    document.getElementById('average_expense_per_user').textContent = half_total.toFixed(2);
     let payment_summary_text;
 
     if (u1_total_spent > half_total) {

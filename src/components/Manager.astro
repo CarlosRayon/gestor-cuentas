@@ -1,126 +1,224 @@
-<h1>Expense Splitter</h1>
+---
+import MoneyInput from './MoneyInput.jsx';
 
-<h2>User 1</h2>
-<div>
-  <label for="user1_alquiler">Alquiler:</label>
-  <input type="number" id="user1_alquiler" name="user1_alquiler" />
-</div>
-<div>
-  <label for="user1_coche">Coche:</label>
-  <input type="number" id="user1_coche" name="user1_coche" />
-</div>
-<div>
-  <label for="user1_compra">Compra:</label>
-  <input type="number" id="user1_compra" name="user1_compra" />
-</div>
-<div>
-  <label for="user1_mascota">Mascota:</label>
-  <input type="number" id="user1_mascota" name="user1_mascota" />
+const initialExpenseValues = {
+  user1_alquiler: 0,
+  user1_coche: 0,
+  user1_compra: 0,
+  user1_mascota: 0,
+  user2_alquiler: 0,
+  user2_coche: 0,
+  user2_compra: 0,
+  user2_mascota: 0,
+};
+---
+
+<style>
+  .manager-container {
+    font-family: sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  h1, h2 {
+    color: #333;
+    text-align: center;
+  }
+  .user-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  .user-section h3 {
+    margin-top: 0;
+    color: #555;
+  }
+  .input-group {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .input-group label {
+    margin-right: 10px;
+    flex-basis: 100px; /* Adjust as needed */
+    color: #444;
+  }
+  /* Ensure MoneyInput component takes up appropriate space */
+  .input-group > div[id^="user"] { /* Targeting the div MoneyInput renders into if needed */
+    flex-grow: 1;
+  }
+
+  .results-section, .summary-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #eef;
+  }
+  .results-section p, .summary-section p {
+    margin: 5px 0;
+    color: #333;
+  }
+  .results-section strong, .summary-section strong {
+    color: #0056b3;
+  }
+  button#calculate_button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  button#calculate_button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="manager-container">
+  <h1>Expense Splitter</h1>
+
+  <div class="user-section">
+    <h3>Usuario 1</h3>
+    <div class="input-group">
+      <label for="user1_alquiler">Alquiler:</label>
+      <MoneyInput client:load id="user1_alquiler" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 500€ + 20,50€" initialValue="200€ + 3,50€" />
+    </div>
+    <div class="input-group">
+      <label for="user1_coche">Coche:</label>
+      <MoneyInput client:load id="user1_coche" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 50€ + 15€" initialValue="50€" />
+    </div>
+    <div class="input-group">
+      <label for="user1_compra">Compra:</label>
+      <MoneyInput client:load id="user1_compra" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 120,75€" initialValue="10,5€+2,25€" />
+    </div>
+    <div class="input-group">
+      <label for="user1_mascota">Mascota:</label>
+      <MoneyInput client:load id="user1_mascota" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 30€" initialValue="" />
+    </div>
+  </div>
+
+  <div class="user-section">
+    <h3>Usuario 2</h3>
+    <div class="input-group">
+      <label for="user2_alquiler">Alquiler:</label>
+      <MoneyInput client:load id="user2_alquiler" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 500€ + 20,50€" initialValue="200€ + 3,50€" />
+    </div>
+    <div class="input-group">
+      <label for="user2_coche">Coche:</label>
+      <MoneyInput client:load id="user2_coche" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 50€ + 15€" initialValue="" />
+    </div>
+    <div class="input-group">
+      <label for="user2_compra">Compra:</label>
+      <MoneyInput client:load id="user2_compra" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 120,75€" initialValue="100€" />
+    </div>
+    <div class="input-group">
+      <label for="user2_mascota">Mascota:</label>
+      <MoneyInput client:load id="user2_mascota" onChangeTotal={globalThis.handleMoneyInputChange} placeholder="Ej: 30€" initialValue="20,5€" />
+    </div>
+  </div>
+
+  <button id="calculate_button">Calculate Expenses</button>
+
+  <div class="results-section" id="results_section">
+    <h2>Resultados Individuales</h2>
+    <p><strong>Usuario 1 - Total Gastado:</strong> <span id="u1_total_spent">0.00</span>€</p>
+    <p><strong>Usuario 2 - Total Gastado:</strong> <span id="u2_total_spent">0.00</span>€</p>
+  </div>
+
+  <div class="summary-section" id="summary_section">
+    <h2>Resumen General</h2>
+    <p><strong>Total General de Gastos:</strong> <span id="total_general_expenses">0.00</span>€</p>
+    <p><strong>Cantidad a Pagar/Recibir:</strong> <span id="payment_summary">Calculando...</span></p>
+  </div>
 </div>
 
-<h2>User 2</h2>
-<div>
-  <label for="user2_alquiler">Alquiler:</label>
-  <input type="number" id="user2_alquiler" name="user2_alquiler" />
-</div>
-<div>
-  <label for="user2_coche">Coche:</label>
-  <input type="number" id="user2_coche" name="user2_coche" />
-</div>
-<div>
-  <label for="user2_compra">Compra:</label>
-  <input type="number" id="user2_compra" name="user2_compra" />
-</div>
-<div>
-  <label for="user2_mascota">Mascota:</label>
-  <input type="number" id="user2_mascota" name="user2_mascota" />
-</div>
+<script define:vars={{ initialExpenseValues }}>
+  // Object to store the numeric values from each MoneyInput
+  const expenseValues = { ...initialExpenseValues };
 
-<h2>Totals</h2>
-<div>
-  <p>Total Alquiler: <span id="total_alquiler">0</span></p>
-  <p>Total Coche: <span id="total_coche">0</span></p>
-  <p>Total Compra: <span id="total_compra">0</span></p>
-  <p>Total Mascota: <span id="total_mascota">0</span></p>
-</div>
-<div>
-  <p>Total User 1: <span id="total_user1">0</span></p>
-  <p>Total User 2: <span id="total_user2">0</span></p>
-</div>
-<div>
-  <p>Average Expense: <span id="average_expense">0</span></p>
-</div>
-<div>
-  <p>Debt Information: <span id="debt_info"></span></p>
-</div>
-
-<button id="calculate_button">Calculate Expenses</button>
-
-<script>
-  function calculateAndDisplayExpenses() {
-    // Get input values from User 1, treating empty as 0
-    const u1_alquiler =
-      parseFloat(document.getElementById("user1_alquiler").value) || 0;
-    const u1_coche =
-      parseFloat(document.getElementById("user1_coche").value) || 0;
-    const u1_compra =
-      parseFloat(document.getElementById("user1_compra").value) || 0;
-    const u1_mascota =
-      parseFloat(document.getElementById("user1_mascota").value) || 0;
-
-    // Get input values from User 2, treating empty as 0
-    const u2_alquiler =
-      parseFloat(document.getElementById("user2_alquiler").value) || 0;
-    const u2_coche =
-      parseFloat(document.getElementById("user2_coche").value) || 0;
-    const u2_compra =
-      parseFloat(document.getElementById("user2_compra").value) || 0;
-    const u2_mascota =
-      parseFloat(document.getElementById("user2_mascota").value) || 0;
-
-    // Calculate totals per category
-    const totalAlquiler = u1_alquiler + u2_alquiler;
-    const totalCoche = u1_coche + u2_coche;
-    const totalCompra = u1_compra + u2_compra;
-    const totalMascota = u1_mascota + u2_mascota;
-
-    // Calculate totals per user
-    const totalUser1 = u1_alquiler + u1_coche + u1_compra + u1_mascota;
-    const totalUser2 = u2_alquiler + u2_coche + u2_compra + u2_mascota;
-
-    // Calculate average and debt
-    const overallTotal = totalUser1 + totalUser2;
-    const averageExpense = overallTotal / 2;
-
-    let debtInfoText = "No one owes anything.";
-    if (totalUser1 > averageExpense) {
-      debtInfoText = `User 2 owes User 1 €${(totalUser1 - averageExpense).toFixed(2)}`;
-    } else if (totalUser2 > averageExpense) {
-      debtInfoText = `User 1 owes User 2 €${(totalUser2 - averageExpense).toFixed(2)}`;
+  // Function called by MoneyInput instances
+  function handleMoneyInputChange(inputId, newTotal) {
+    if (expenseValues.hasOwnProperty(inputId)) {
+      expenseValues[inputId] = parseFloat(newTotal) || 0;
+      // Optional: If live updates are desired without clicking the button:
+      // calculateAndDisplayExpenses(); 
     }
+  }
+  globalThis.handleMoneyInputChange = handleMoneyInputChange; // Make available to Astro components
 
-    // Display results
-    document.getElementById("total_alquiler").textContent =
-      totalAlquiler.toFixed(2);
-    document.getElementById("total_coche").textContent = totalCoche.toFixed(2);
-    document.getElementById("total_compra").textContent =
-      totalCompra.toFixed(2);
-    document.getElementById("total_mascota").textContent =
-      totalMascota.toFixed(2);
+  // Function to calculate and display expenses
+  function calculateAndDisplayExpenses() {
+    // User 1 expenses
+    const u1_alquiler = expenseValues.user1_alquiler;
+    const u1_coche = expenseValues.user1_coche;
+    const u1_compra = expenseValues.user1_compra;
+    const u1_mascota = expenseValues.user1_mascota;
+    const u1_total_spent = u1_alquiler + u1_coche + u1_compra + u1_mascota;
 
-    document.getElementById("total_user1").textContent = totalUser1.toFixed(2);
-    document.getElementById("total_user2").textContent = totalUser2.toFixed(2);
+    // User 2 expenses
+    const u2_alquiler = expenseValues.user2_alquiler;
+    const u2_coche = expenseValues.user2_coche;
+    const u2_compra = expenseValues.user2_compra;
+    const u2_mascota = expenseValues.user2_mascota;
+    const u2_total_spent = u2_alquiler + u2_coche + u2_compra + u2_mascota;
 
-    document.getElementById("average_expense").textContent =
-      averageExpense.toFixed(2);
-    document.getElementById("debt_info").textContent = debtInfoText;
+    // Update display for individual totals
+    document.getElementById('u1_total_spent').textContent = u1_total_spent.toFixed(2);
+    document.getElementById('u2_total_spent').textContent = u2_total_spent.toFixed(2);
+
+    // Calculate and display general summary
+    const total_general_expenses = u1_total_spent + u2_total_spent;
+    document.getElementById('total_general_expenses').textContent = total_general_expenses.toFixed(2);
+
+    const half_total = total_general_expenses / 2;
+    let payment_summary_text;
+
+    if (u1_total_spent > half_total) {
+      payment_summary_text = `Usuario 2 debe pagar a Usuario 1: ${(u1_total_spent - half_total).toFixed(2)}€`;
+    } else if (u2_total_spent > half_total) {
+      payment_summary_text = `Usuario 1 debe pagar a Usuario 2: ${(u2_total_spent - half_total).toFixed(2)}€`;
+    } else {
+      payment_summary_text = "Ambos usuarios han pagado lo mismo.";
+    }
+    document.getElementById('payment_summary').textContent = payment_summary_text;
   }
 
-  // Attach event listener to the button
-  const calculateButton = document.getElementById("calculate_button");
-  if (calculateButton) {
-    calculateButton.addEventListener("click", calculateAndDisplayExpenses);
-  } else {
-    console.error("Button with ID 'calculate_button' not found.");
-  }
+  // Event listener for the button
+  document.getElementById('calculate_button').addEventListener('click', calculateAndDisplayExpenses);
+
+  // Initial calculation on page load based on initialValues passed to MoneyInput components
+  // The MoneyInput useEffect will call handleMoneyInputChange for each component with initialValue
+  // So, to get the initial sum, we need to ensure calculateAndDisplayExpenses is called after all initial values are processed.
+  // A simple timeout can work for this, or a more sophisticated ready check.
+  // Or, simply instruct the user to click the button for the first calculation.
+  // Let's call it once after a short delay to allow components to initialize.
+  // This ensures that initialValues are processed by MoneyInput and then by Manager.
+  document.addEventListener('DOMContentLoaded', () => {
+    // Populate expenseValues from initialValues set in MoneyInput components
+    // This is crucial because MoneyInput's useEffect calls onChangeTotal, which updates expenseValues.
+    // We need to wait for these updates to settle before the initial calculation.
+    
+    // A more robust way:
+    // Instead of a timeout, the `onChangeTotal` in `MoneyInput` (when called from `useEffect`)
+    // can be the sole trigger if we make `calculateAndDisplayExpenses` run on each change.
+    // For now, with the button, the initial state is fine.
+    // Let's call calculateAndDisplayExpenses once to reflect initial values.
+    
+    // The `initialValue` prop in `MoneyInput` will call `onChangeTotal` via `useEffect`.
+    // This will populate `expenseValues`. We then need to call `calculateAndDisplayExpenses`.
+    // To ensure all `MoneyInput` components have initialized and called `onChangeTotal`:
+    setTimeout(calculateAndDisplayExpenses, 100); // Adjust delay if needed, or make calculate live
+  });
+
 </script>

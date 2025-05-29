@@ -1,0 +1,11 @@
+.error {
+  border-color: red !important; /* Added !important for emphasis if needed */
+  border-width: 1px;
+  border-style: solid;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}

@@ -1,8 +1,14 @@
 ---
 import Manager from '../components/Manager.astro';
+import MoneyInput from '../components/MoneyInput.jsx'; // Import the new component
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-	<Manager />
+	<main>
+		<h1>Money Input Test</h1>
+		<MoneyInput client:load /> {/* Add the MoneyInput component with a client directive */}
+		<hr /> {/* Optional: Add a separator */}
+		<Manager />
+	</main>
 </Layout>
